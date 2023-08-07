@@ -6,8 +6,23 @@
 </head>
 <body>
 <a href="{% url 'profile' %}">{{ user }}</a>
-<p>Название комнаты: <b>{{ room_name }}</b></p>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+<p>Название комнаты: <b>{{ room.title }}</b></p>
+<p>Создатель комнаты: <b>{{ room.creator }}</b></p>
+
+{% if room.admins.all %}
+Админы комнаты:<br>
+{% for user in room.admins.all %}
+    <b>{{ user.username }}</b>
+{% endfor %}
+{% endif %}
+<br>
+
+Участники:<br>
+{% for user in room.participants.all %}
+    <b>{{ user.username }}</b>
+{% endfor %}<br>
+
+    <textarea id="chat-log" cols="130" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
     {{ room_name|json_script:"room-name" }}

@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from unidecode import unidecode
@@ -7,12 +8,23 @@ from .forms import *
 
 
 def main_page(request):
-    return render(request, "chat/main_page.html", {'form': UserLoginForm})
+    rooms = Room.objects.filter(Q(is_public=True) | Q(participants=request.user))
+    return render(request, "chat/main_page.html", {'form': UserLoginForm, 'rooms': rooms})
 
 
 @login_required
-def room(request, room_name):
-    return render(request, "chat/room.html", {"room_name": room_name, 'user': request.user})
+def room(request, room_name=None):
+    if room_name == None:
+        room_name = request.GET.get('room_name')
+
+    try:
+        room = Room.objects.get(title=room_name, is_banned=False)
+        if room.is_public or request.user in room.participants.all():
+            return render(request, "chat/room.html", {"room_name": room_name, 'user': request.user, 'room': room})
+        else:
+            return redirect('main_page')
+    except:
+        return redirect('main_page')
 
 
 @login_required
