@@ -5,6 +5,7 @@
     <title>Chat Room</title>
 </head>
 <body>
+<a href="{% url 'profile' %}">{{ user }}</a>
 <p>Название комнаты: <b>{{ room_name }}</b></p>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
@@ -45,6 +46,8 @@
             }));
             messageInputDom.value = '';
         };
+
+
     </script>
 </body>
 </html>

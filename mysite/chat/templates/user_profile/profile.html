@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя {{ user }}</title>
+</head>
+<body>
+Имя - {{ user.username }} <br>
+Описание - {{ user.description }}
+
+
+{% if user.friends.all %}
+<h4>Друзья:</h4>
+{% for item in user.friends.all %}
+    <a href="{% url 'profile' slug=item.slug %}">{{ item.username }}</a>
+{% endfor %}
+{% endif %}
+
+</body>
+</html>
