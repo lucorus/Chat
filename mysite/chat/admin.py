@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Room
+from .models import CustomUser, Room, Message
 
 
 class AdminCustomUser(admin.ModelAdmin):
@@ -12,5 +12,10 @@ class RoomAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'author', 'text', 'created_add']
+
+
 admin.site.register(CustomUser, AdminCustomUser)
 admin.site.register(Room, RoomAdmin)
+admin.site.register(Message, MessageAdmin)

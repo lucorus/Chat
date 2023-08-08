@@ -34,3 +34,17 @@ class Room(models.Model):
     class Meta:
         verbose_name = 'Комната'
         verbose_name_plural = 'Комнаты'
+
+
+class Message(models.Model):
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, db_index=True, related_name='messages', verbose_name='Автор')
+    text = models.TextField(verbose_name='Текст')
+    created_add = models.DateTimeField(auto_now_add=True, verbose_name='Время написания')
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='messages', verbose_name='Комната')
+
+    def __str__(self):
+        return 'Сообщение № ' + str(self.pk)
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'

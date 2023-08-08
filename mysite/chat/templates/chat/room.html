@@ -22,6 +22,11 @@
     <b>{{ user.username }}</b>
 {% endfor %}<br>
 
+{% for item in room.messages.all %}
+    {{ item.text }}
+{% endfor %}<br>
+
+
     <textarea id="chat-log" cols="130" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
